@@ -22,6 +22,8 @@ import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
 class Main : JavaPlugin(), Listener {
+  var maxDistance = 1000
+
   val protocol get() = ProtocolLibrary.getProtocolManager()
 
   val mypackets = mutableSetOf<Any>()
@@ -30,6 +32,10 @@ class Main : JavaPlugin(), Listener {
 
   override fun onEnable() {
     super.onEnable()
+
+    saveDefaultConfig()
+
+    maxDistance = config.getInt("distance")
 
     server.pluginManager.registerEvents(this, this)
 
@@ -106,7 +112,7 @@ class Main : JavaPlugin(), Listener {
 
     for (target in world.players) {
       val distance = distance(target)
-      if (distance > 1000) continue
+      if (distance > maxDistance) continue
       distances[target] = distance
 
       if (target in old) {
@@ -142,7 +148,8 @@ class Main : JavaPlugin(), Listener {
 
   fun Player.sendAdded(players: Set<Player>, distances: Map<Player, Double>) {
     val list = players.mapNotNull {
-      val latency = distances[it]!! * 2
+      val coeff = 2000 / maxDistance
+      val latency = distances[it]!! * coeff
       it.toInfoData(latency.toInt())
     }
 
@@ -156,7 +163,8 @@ class Main : JavaPlugin(), Listener {
 
   fun Player.sendUpdated(players: Set<Player>, distances: Map<Player, Double>) {
     val list = players.mapNotNull {
-      val latency = distances[it]!! * 2
+      val coeff = 2000 / maxDistance
+      val latency = distances[it]!! * coeff
       it.toInfoData(latency.toInt())
     }
 
