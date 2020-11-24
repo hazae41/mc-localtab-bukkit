@@ -18,6 +18,7 @@ Join the following address `saurusmc.org` on Minecraft
 
 - Only show players less than x blocks around you
 - Display the distance in the ping (good ping = good distance)
+- Can show a "Close players" tab list header, translated in many laguages
 
 ### Config
 
