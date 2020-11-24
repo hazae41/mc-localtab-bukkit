@@ -23,4 +23,5 @@ Join the following address `saurusmc.org` on Minecraft
 
 ```yaml
 distance: 1000
+header: true
 ```
