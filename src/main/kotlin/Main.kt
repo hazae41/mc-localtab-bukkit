@@ -22,20 +22,19 @@ import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 
 class Main : JavaPlugin(), Listener {
-  var maxDistance = 1000
-
   val protocol get() = ProtocolLibrary.getProtocolManager()
 
   val mypackets = mutableSetOf<Any>()
 
   val profiles = mutableMapOf<UUID, WrappedGameProfile>()
 
+  val headerEnabled by lazy { config.getBoolean("header") }
+  val maxDistance by lazy { config.getInt("distance") }
+
   override fun onEnable() {
     super.onEnable()
 
     saveDefaultConfig()
-
-    maxDistance = config.getInt("distance")
 
     server.pluginManager.registerEvents(this, this)
 
@@ -79,6 +78,11 @@ class Main : JavaPlugin(), Listener {
     lists[e.player] = mutableSetOf()
 
     server.scheduler.runTask(this) { _ ->
+      if (headerEnabled) {
+        val lang = getLang(e.player.locale)
+        e.player.playerListHeader = lang.header()
+      }
+
       e.player.world.players.forEach { it.tick() }
     }
   }

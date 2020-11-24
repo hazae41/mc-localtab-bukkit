@@ -2,7 +2,7 @@
 
 > Only show close players in the tab list
 
-#### [Download LocalTab](https://github.com/saurusmc/localtab-bukkit/raw/master/build/libs/localtab-1.1.jar)
+#### [Download LocalTab](https://github.com/saurusmc/localtab-bukkit/raw/master/build/libs/localtab-1.2.jar)
 
 #### [Download Kotlin](https://github.com/saurusmc/localtab-bukkit/raw/master/build/libs/Kotlin-1.4.10.jar)
 
