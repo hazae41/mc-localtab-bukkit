@@ -38,7 +38,9 @@ class Main : JavaPlugin(), Listener {
 
     server.pluginManager.registerEvents(this, this)
 
-    server.scheduler.runTaskTimer(this, { _ -> tick() }, 20L, 20L)
+    server.scheduler.runTaskTimer(this, { _ ->
+      server.onlinePlayers.forEach { it.tick() }
+    }, 20L, 20L)
 
     protocol.addPacketListener(adapter)
   }
@@ -78,13 +80,15 @@ class Main : JavaPlugin(), Listener {
     lists[e.player] = mutableSetOf()
 
     server.scheduler.runTask(this) { _ ->
-      if (headerEnabled) {
-        val lang = getLang(e.player.locale)
-        e.player.playerListHeader = lang.header()
-      }
-
       e.player.world.players.forEach { it.tick() }
     }
+
+    if (!headerEnabled) return
+
+    server.scheduler.runTaskLater(this, { _ ->
+      val lang = getLang(e.player.locale)
+      e.player.playerListHeader = lang.header()
+    }, 20)
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
@@ -102,8 +106,6 @@ class Main : JavaPlugin(), Listener {
       e.player.world.players.forEach { it.tick() }
     }
   }
-
-  fun tick() = server.onlinePlayers.forEach { it.tick() }
 
   fun Player.tick() {
     val old = lists[this]!!
@@ -127,9 +129,14 @@ class Main : JavaPlugin(), Listener {
       }
     }
 
-    sendAdded(added, distances)
-    sendUpdated(updated, distances)
-    sendRemoved(removed)
+    if (added.isNotEmpty())
+      sendAdded(added, distances)
+
+    if (updated.isNotEmpty())
+      sendUpdated(updated, distances)
+
+    if (removed.isNotEmpty())
+      sendRemoved(removed)
 
     lists[this] = distances.keys
 

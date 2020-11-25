@@ -2,7 +2,7 @@
 
 > Only show close players in the tab list
 
-#### [Download LocalTab](https://github.com/saurusmc/localtab-bukkit/raw/master/build/libs/localtab-1.2.jar)
+#### [Download LocalTab](https://github.com/saurusmc/localtab-bukkit/raw/master/build/libs/localtab-1.2.1.jar)
 
 #### [Download Kotlin](https://github.com/saurusmc/localtab-bukkit/raw/master/build/libs/Kotlin-1.4.10.jar)
 
@@ -18,7 +18,7 @@ Join the following address `saurusmc.org` on Minecraft
 
 - Only show players less than x blocks around you
 - Display the distance in the ping (good ping = good distance)
-- Can show a "Close players" tab list header, translated in many laguages
+- Can show a "Close players" tab list header, translated in many languages
 
 ### Config
 
