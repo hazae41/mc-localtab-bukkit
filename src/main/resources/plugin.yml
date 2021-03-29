@@ -1,0 +1,7 @@
+name: LocalTab
+main: hazae41.localtab.Plugin
+version: 1.3
+author: hazae41
+api-version: 1.16
+description: LocalTab
+depend: [ ProtocolLib ]
